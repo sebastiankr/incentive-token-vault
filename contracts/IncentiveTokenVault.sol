@@ -72,7 +72,7 @@ contract TokenVault is Ownable {
      * @param _tokensToBeAllocated Total number of tokens this vault will hold - including decimal multiplcation
      *
      */
-    function TokenVault(uint _freezeEndsAt, HumanStandardToken _token, uint _tokensToBeAllocated) {
+    function TokenVault(uint _freezeEndsAt, HumanStandardToken _token, uint _tokensToBeAllocated) public {
         // Give argument
         require(_freezeEndsAt != 0);
 
@@ -115,7 +115,7 @@ contract TokenVault is Ownable {
      * Checks are in place to prevent creating a vault that is locked with incorrect token balances.
      *
      */
-    function lock() onlyOwner {
+    function lock() public onlyOwner {
         // Already locked
         require(lockedAt == 0);
 
@@ -130,7 +130,7 @@ contract TokenVault is Ownable {
     /**
      * In the case locking failed, then allow the owner to reclaim the tokens on the contract.
      */
-    function recoverFailedLock() onlyOwner {
+    function recoverFailedLock() public onlyOwner {
         require(lockedAt == 0);
 
         // Transfer all tokens on this contract back to the owner
@@ -148,7 +148,7 @@ contract TokenVault is Ownable {
      * Claim N bought tokens to the investor as the msg sender.
      *
      */
-    function claim() {
+    function claim() public {
         address investor = msg.sender;
 
         // We were never locked
@@ -178,9 +178,9 @@ contract TokenVault is Ownable {
      * Resolve the contract umambigious state.
      */
     function getState() public constant returns(State) {
-        if(lockedAt == 0) {
+        if (lockedAt == 0) {
             return State.Loading;
-        } else if(now > freezeEndsAt) {
+        } else if (now > freezeEndsAt) {
             return State.Distributing;
         } else {
             return State.Holding;
