@@ -19,7 +19,10 @@ import "./Ownable.sol";
  * - After the freeze time is over investors can call claim() from their address to get their tokens
  *
  */
-contract TokenVault is Ownable {
+contract IncentiveTokenVault is Ownable {
+
+    uint32 vestingPeriod; // ms
+
 
     /** How many investors we have now */
     uint public investorCount = 0;
@@ -64,23 +67,26 @@ contract TokenVault is Ownable {
 
     event Locked();
 
+
+    // function IncentiveTokenVault(uint _freezeEndsAt, HumanStandardToken _token, uint _tokensToBeAllocated) public {
+    //     // Give argument
+    //     require(_freezeEndsAt != 0);
+
+    //     owner = msg.sender;
+    //     token = _token;
+
+    //     freezeEndsAt = _freezeEndsAt;
+    //     tokensToBeAllocated = _tokensToBeAllocated;
+    // }
     /**
-     * Create presale contract where lock up period is given days
+     * Create on organization-wide incentive contract, locking tokens for a 
+     * predefined cliff vesting period.
      *
-     * @param _freezeEndsAt UNIX timestamp when the vault unlocks
-     * @param _token Token contract address we are distributing
-     * @param _tokensToBeAllocated Total number of tokens this vault will hold - including decimal multiplcation
+     * @param _vestingPeriod in milliseconds
      *
      */
-    function TokenVault(uint _freezeEndsAt, HumanStandardToken _token, uint _tokensToBeAllocated) public {
-        // Give argument
-        require(_freezeEndsAt != 0);
-
-        owner = msg.sender;
-        token = _token;
-
-        freezeEndsAt = _freezeEndsAt;
-        tokensToBeAllocated = _tokensToBeAllocated;
+    function IncentiveTokenVault(uint32 _vestingPeriod) public {
+        vestingPeriod = _vestingPeriod;
     }
 
     /**
