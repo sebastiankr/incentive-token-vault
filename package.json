@@ -1,0 +1,32 @@
+{
+  "name": "incentive-token-vault",
+  "version": "0.0.1",
+  "description": "Incentive Token Vault to lock tokens for a predefinded vesting period.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastiankr/incentive-token-vault.git"
+  },
+  "keywords": [
+    "Incentive",
+    "Token",
+    "Vesting",
+    "Vault"
+  ],
+  "author": "Sebastian Kropp",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sebastiankr/incentive-token-vault/issues"
+  },
+  "homepage": "https://github.com/sebastiankr/incentive-token-vault#readme",
+  "devDependencies": {
+    "mocha": "^5.0.1",
+    "truffle": "^4.0.6"
+  }
+}
