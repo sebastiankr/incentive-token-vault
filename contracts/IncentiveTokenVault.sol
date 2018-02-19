@@ -21,8 +21,8 @@ import "./Ownable.sol";
  */
 contract IncentiveTokenVault is Ownable {
 
-    uint32 vestingPeriod; // ms
-
+    // Period after which incentive is accessable to employee
+    uint32 public vestingPeriod; // in ms
 
     /** How many investors we have now */
     uint public investorCount = 0;
