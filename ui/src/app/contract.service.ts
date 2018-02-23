@@ -1,21 +1,41 @@
 import { Injectable } from '@angular/core'
+import * as ethers from 'ethers'
 
 declare const window
 
 @Injectable()
 export class ContractService {
-  private _vestingPeriod = '10 days'
+  private _vestingPeriod
   private _provider
+  private _address
+
   get vestingPeriod() {
+    if (!this._vestingPeriod) {
+      return '10 days'
+    }
     return this._vestingPeriod
   }
 
-  constructor() {
+  constructor() {}
+
+  async connect() {
     if (typeof window.web3 !== 'undefined') {
-      // Use the browser's ethereum provider
-      this._provider = window.web3.currentProvider
+      this._provider = new ethers.providers.Web3Provider(
+        window.web3.currentProvider
+      )
+      const signer = this._provider.getSigner()
+      try {
+        this._address = await signer.getAddress()
+      } catch (err) {
+        if (err.message === 'no account') {
+          // throw err
+          throw new Error(
+            'Unlock your wallet in order to interact with the Incentive Token Vault!'
+          )
+        }
+      }
     } else {
-      console.log('No web3? You should consider trying MetaMask!')
+      console.log('You need an ethereum browser or extention for this Dapp!')
     }
   }
 }
